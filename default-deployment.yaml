@@ -1,0 +1,21 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: date-setter
+  labels:
+    app: date-setter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: date-setter
+  template:
+    metadata:
+      labels:
+        app: date-setter
+    spec:
+      containers:
+      - name: date-setter
+        image: docker.io/niki2401/date-setter:latest
+        ports:
+        - containerPort: 8080
