@@ -50,8 +50,8 @@ func main() {
 	os.Exit(0)
 }
 
-func setName(d *unstructured.Unstructured) *unstructured.Unstructured {
+func setName(d *unstructured.Unstructured) map[string]interface{} {
 	t := time.Now()
 	d.SetName(fmt.Sprintf("podinfo-%v", t.Format(defaultTimeFormat)))
-	return d
+	return d.UnstructuredContent()
 }

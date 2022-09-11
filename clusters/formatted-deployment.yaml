@@ -1,40 +1,39 @@
-object:
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: podinfo-09-11-2022-18-14-31
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podinfo-09-11-2022-18-19-04
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: podinfo
+  template:
+    annotations:
+      prometheus.io/port: "9797"
+      prometheus.io/scrape: "true"
+    metadata:
+      labels:
         app: podinfo
-    template:
-      annotations:
-        prometheus.io/port: "9797"
-        prometheus.io/scrape: "true"
-      metadata:
-        labels:
-          app: podinfo
-      spec:
-        containers:
-        - command:
-          - ./podinfo
-          - --port=9898
-          - --port-metrics=9797
-          - --random-delay=false
-          - --random-error=false
-          image: ghcr.io/stefanprodan/podinfo:6.2.0
-          name: podinfo
-          ports:
-          - containerPort: 9898
-            name: http
-            protocol: TCP
-          - containerPort: 9797
-            name: http-metrics
-          resources:
-            limits:
-              cpu: 2000m
-              memory: 512Mi
-            requests:
-              cpu: 100m
-              memory: 64Mi
+    spec:
+      containers:
+      - command:
+        - ./podinfo
+        - --port=9898
+        - --port-metrics=9797
+        - --random-delay=false
+        - --random-error=false
+        image: ghcr.io/stefanprodan/podinfo:6.2.0
+        name: podinfo
+        ports:
+        - containerPort: 9898
+          name: http
+          protocol: TCP
+        - containerPort: 9797
+          name: http-metrics
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
