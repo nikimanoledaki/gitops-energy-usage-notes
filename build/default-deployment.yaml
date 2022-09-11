@@ -1,21 +1,39 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: date-setter
-  labels:
-    app: date-setter
+  name: podinfo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: date-setter
+      app: podinfo
   template:
+    annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9797"
     metadata:
       labels:
-        app: date-setter
+        app: podinfo
     spec:
       containers:
-      - name: date-setter
-        image: docker.io/niki2401/date-setter:latest
+      - name: podinfo
+        image: ghcr.io/stefanprodan/podinfo:6.2.0
         ports:
-        - containerPort: 8080
+        - name: http
+          containerPort: 9898
+          protocol: TCP
+        - name: http-metrics
+          containerPort: 9797
+        command:
+        - ./podinfo
+        - --port=9898
+        - --port-metrics=9797
+        - --random-delay=false
+        - --random-error=false
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
