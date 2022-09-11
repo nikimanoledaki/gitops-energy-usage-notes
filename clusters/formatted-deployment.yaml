@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: podinfo-09-11-2022-18-19-04
+  name: podinfo-09-11-2022-18-21-39
+  namespace: default
 spec:
   replicas: 1
   selector:
