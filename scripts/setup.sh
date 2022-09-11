@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-# Authenticate with AWS CLI
+# Authenticate with AWS CLI locally
 ~/exec/aws-creds.sh eksctl
 
 # Create Cluster 1 (snowflake cluster)
@@ -16,8 +16,6 @@ nodeGroups:
   - name: ng-1
     instanceType: t3.medium
     desiredCapacity: 1
-
-
 EOF
 
 cat snowflake-cluster.yaml | eksctl create cluster --config-file -
