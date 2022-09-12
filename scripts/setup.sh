@@ -38,7 +38,7 @@ EOF
 cat gitops-cluster.yaml | eksctl create cluster --config-file -
 
 # Setup Flux in Cluster 2
-flux bootstrap github --owner=$GITHUB_USER --repository=env-sus-gitops --path=clusters --private
+flux bootstrap github --owner=$GITHUB_USER --repository=gitops-energy-usage --path=clusters --private
 
 # Update Deployment name
 ./name-setter
