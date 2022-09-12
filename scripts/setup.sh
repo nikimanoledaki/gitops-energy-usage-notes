@@ -9,7 +9,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: snowflake-cluster
+  name: snowflake
   region: eu-north-1
 
 nodeGroups:
@@ -26,7 +26,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: gitops-cluster
+  name: gitops
   region: eu-north-1
 
 nodeGroups:
