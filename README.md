@@ -1,12 +1,12 @@
 ## Energy Consumption Research
 ## Comparing snowflake Kubernetes cluster with Flux-based GitOps clusters
 
-## Aims
+## Aims
 - Setting up a reference architecture for how to measure energy consumption
 - What is the environmental impact of GitOps?
 - Measure energy consumption of Kubernetes components and architectures using cloud-native tools
 
-## Resources
+## Resources
 
 Some of the technologies, tools, and patterns mentioned in this project:
 - [eksctl](https://github.com/weaveworks/eksctl)
@@ -17,7 +17,14 @@ Some of the technologies, tools, and patterns mentioned in this project:
 - [Minikube with KVM](https://minikube.sigs.k8s.io/docs/drivers/kvm2/)
 - [EC2 instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
 
-### Local Development
+### Local Development
+
+### Linux
+If using Linux, KVM can most likely be installed directly - I think? I have not verified this. Help would be appreciated!
+So, if using Linux, no need to create VM1 - skip directly to step to [install KVM](#install-kvm).
+
+### MacOS
+If using a Mac (x86 Intel CPU only, M1 is not supported), unfortunately, nested VMs are a must.
 
 Steps to follow:
 - Install Virtualbox for your OS
@@ -29,7 +36,8 @@ vagrant up
 vagrant ssh
 ```
 
-Then, run [this](TODO) script in the first VM (VM1) (in Development).
+#### Install KVM
+Then, run [this](TODO) script in the first VM (VM1) (in Development) to setup KVM.
 In Production (Liquid Metal or AWS) this would be a new Ubuntu machine.
 
 From the Linux VM1, the next step is to provision a Linux-based Kernel VM (KVM) as a second VM (VM2).
