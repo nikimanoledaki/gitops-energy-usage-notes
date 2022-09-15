@@ -40,34 +40,57 @@ vagrant up
 vagrant ssh
 ```
 
+The following step (minikube with KVM) will create a KVM nested in the Virtualbox VM, Virtualbox.
+
 ### Install KVM & start a Kubernetes cluster with minikube
-Then, run [this](./scripts/install-kvm.sh) script in the first VM (VM1) (in Development) to setup KVM.
-In Production (Liquid Metal or AWS) this would be a new Ubuntu machine.
 
-From the Linux VM1, the next step is to provision a Linux-based Kernel VM (KVM) as a second VM (VM2).
+Use [this](./scripts/install-kvm.sh) script to install libvirt and use minikube to create a Kubernetes cluster using KVM.
 
-This creates two nested VMs. Virtualbox, which is hosting the second VM, must be enabled to allow nesting VMs.
+#### Methodology
 
 In a cloud environment, VM1 represents the host machine or baremetal infrastrcture.
-It could be an EC2 instance in AWS, which is itself a VM. This is more likely to work on a baremetal one in theory.
-I have not successfully tested if it works, or if it works on a regular EC2 instance or if it works at all.
+This could, in theory, be an EC2 instance in AWS (which is itself a VM). Testing on a regular EC2 instance has not been successful yet.
 
-Or, it could be on Liquid Metal (a Flintlock microVM). The latter would be hosted on Equinix baremetal machines.
-The advantage of self-hosting in a co-located Data Centre (DC) such as what is offered by Equinix is
-the benefit from data center economies of scale. This may lead to optimisations on Scope 1 direct emissions.
+Alternatively, it could be done using Liquid Metal on a Flintlock microVM hosted on a Equinix baremetal machine.
 
-This could be part of a Lifecycle Assessment of a piece of software architecture in a cloud environment to
-determine its energy usage in various scenarios and use cases. Perhaps estimations for carbon emissions could be done as well.
-However, the focus here is on energy usage rather than localization and grid system estimates.
+Self-hosting in a co-located Data Centre (DC) such as Equinix adds the the benefit from data center economies of scale that
+may lead to optimisations on Scope 1 direct emissions.
 
-It could be possible, however, to start from energy usage and combine this with carbon emissions estimations.
-Energy coefficients would have to determine how to deduce Marginal Carbon Emissions from CPU-based, Pod-based, energy metrics
-based on the cloud provider, their infrastructure, the region these are running in, and access to accurate and timely
-grid energy usage reporting. Cloud hyperscalers are not prepared to do that - some quote security issues.
+The aim of this is to be able to do a Lifecycle Assessment of a piece of software architecture in a cloud environment to
+determine its energy usage in various scenarios and use cases. 
 
-### Install Kepler, Prometheus & Grafana on the cluster
+Estimations for carbon emissions could follow this. However, the focus here is on energy usage rather than localized grid system estimates.
 
-Using the [Makefile](Makefile):
+Metrics on energy usage could be combined with carbon emissions estimates.
+Energy coefficients would deduce Marginal Carbon Emissions from these CPU-based, Pod-based, energy metrics.
+The energy coefficients would be based on the cloud provider, their infrastructure, the region these are running in, etc. 
+This would require access to accurate and timely grid energy usage reporting. Cloud providers are not yet prepared to do this however due to security-related concerns.
+
+### Install Kepler
+
+What is [Kepler](https://github.com/sustainable-computing-io/kepler)?
+> Kepler (Kubernetes-based Efficient Power Level Exporter) uses eBPF to probe energy related system stats and exports as Prometheus metrics
+
+It can help us get energy consumption metrics from a cluster.
+
+Kepler requirements as outlined [here](https://github.com/sustainable-computing-io/kepler/tree/main/manifests#prerequisites):
+- Support for cgroup v2
+- Support for kernel-devel extensions
+- Provide the kernel headers (required by eBPF)
+- Kernel with eBPF support
+
+For example, [Kepler on Openshift](https://github.com/sustainable-computing-io/kepler/tree/main/manifests#kepler-on-openshift) has already been integrated and works. This integration can be used as an example of what configuration is needed, e.g.:
+```
+  kernelArguments:
+    - systemd.unified_cgroup_hierarchy=1
+    - cgroup_no_v1="all"
+  extensions:
+  - kernel-devel
+```
+
+### Install Prometheus & Grafana on the cluster
+
+Install Prometheus & Grafana using the [Makefile](Makefile):
 ```
 // All of these should be made GitOps-able with Flux and Helm and/or Terraform.
 // They should then be added to the repo in ./clusters for Flux to pick them up.
