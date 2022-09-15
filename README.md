@@ -1,10 +1,10 @@
-## Energy Consumption Research
-## Comparing snowflake Kubernetes cluster with Flux-based GitOps clusters
+## Energy Consumption: Comparing snowflake Kubernetes cluster with Flux-based GitOps clusters
 
 ## Aims
 - Setting up a reference architecture for how to measure energy consumption
 - What is the environmental impact of GitOps?
 - Measure energy consumption of Kubernetes components and architectures using cloud-native tools
+- Potentially create a reference architecture for how to measure cloud native processes with cloud native tools
 
 ## Resources
 
@@ -38,7 +38,7 @@ vagrant up
 vagrant ssh
 ```
 
-### Install KVM
+### Install KVM & start a Kubernetes cluster with minikube
 Then, run [this](./scripts/install-kvm.sh) script in the first VM (VM1) (in Development) to setup KVM.
 In Production (Liquid Metal or AWS) this would be a new Ubuntu machine.
 
@@ -62,4 +62,24 @@ It could be possible, however, to start from energy usage and combine this with 
 Energy coefficients would have to determine how to deduce Marginal Carbon Emissions from CPU-based, Pod-based, energy metrics
 based on the cloud provider, their infrastructure, the region these are running in, and access to accurate and timely
 grid energy usage reporting. Cloud hyperscalers are not prepared to do that - some quote security issues.
+
+### Install Kepler, Prometheus & Grafana on the cluster
+```
+// All of these should be made GitOps-able with Flux and Helm and/or Terraform.
+// They should then be added to the repo in ./clusters for Flux to pick them up.
+
+// Install all dependencies
+make-dependencies
+
+OR
+
+// Install Kepler as a Daemonset
+make kepler
+
+// Start Prometheus to receive data from Kepler and send it to Grafana
+make prometheus
+
+// Visualise energy CPU metrics
+make grafana
+```
 
