@@ -1,10 +1,12 @@
-## Energy Consumption: Comparing snowflake Kubernetes cluster with Flux-based GitOps clusters
+## Energy-efficient Kubernetes on baremetal
+
+Case Study: Comparing the energy consumption of snowflake clusters and Flux-based GitOps clusters.
 
 ## Aims
-- Setting up a reference architecture for how to measure energy consumption
-- What is the environmental impact of GitOps?
+- Set up a reference architecture for how to measure energy consumption
+- Answer the question: What is the environmental impact of GitOps?
 - Measure energy consumption of Kubernetes components and architectures using cloud-native tools
-- Potentially create a reference architecture for how to measure cloud native processes with cloud native tools
+- Create (eventually) a sort of reference architecture for how to measure cloud-native processes with cloud-native tools
 
 ## Resources
 
@@ -23,7 +25,7 @@ Some of the technologies, tools, and patterns mentioned in this project:
 
 #### Linux
 If using Linux, KVM can most likely be installed directly - I think? I have not verified this. Help would be appreciated!
-So, if using Linux, no need to create VM1 - skip directly to step to [install KVM](#install-kvm).
+So, if using Linux, no need to create VM1 - skip directly to step to [install KVM](#install-kvm--start-a-kubernetes-cluster-with-minikube).
 
 #### MacOS
 If using a Mac (x86 Intel CPU only, M1 is not supported), unfortunately, nested VMs are a must.
@@ -63,7 +65,9 @@ Energy coefficients would have to determine how to deduce Marginal Carbon Emissi
 based on the cloud provider, their infrastructure, the region these are running in, and access to accurate and timely
 grid energy usage reporting. Cloud hyperscalers are not prepared to do that - some quote security issues.
 
-### Install Kepler, Prometheus & Grafana on the cluster
+### Install Kepler, Prometheus & Grafana on the cluster
+
+Using the [Makefile](Makefile):
 ```
 // All of these should be made GitOps-able with Flux and Helm and/or Terraform.
 // They should then be added to the repo in ./clusters for Flux to pick them up.
