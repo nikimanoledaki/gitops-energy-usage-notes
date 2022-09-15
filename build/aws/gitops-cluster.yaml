@@ -1,0 +1,11 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: gitops-cluster
+  region: eu-north-1
+
+managedNodeGroups:
+  - name: ng-metal
+    instanceType: m5.metal
+    desiredCapacity: 1

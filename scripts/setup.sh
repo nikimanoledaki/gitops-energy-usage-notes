@@ -14,7 +14,7 @@ metadata:
 
 nodeGroups:
   - name: ng-1
-    instanceType: t3.medium
+    instanceType: t3.large
     desiredCapacity: 1
 EOF
 
@@ -30,8 +30,8 @@ metadata:
   region: eu-north-1
 
 nodeGroups:
-  - name: ng-1
-    instanceType: t3.medium
+  - name: ng-2
+    instanceType: t3.large
     desiredCapacity: 1
 EOF
 

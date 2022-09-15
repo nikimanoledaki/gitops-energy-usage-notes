@@ -1,23 +1,4 @@
-## Energy Consumption Research
-## Comparing snowflake Kubernetes cluster with Flux-based GitOps clusters
-
-## Aims
-- Setting up a reference architecture for how to measure energy consumption
-- What is the environmental impact of GitOps?
-- Measure energy consumption of Kubernetes components and architectures using cloud-native tools
-
-## Resources
-
-Some of the technologies, tools, and patterns mentioned in this project:
-- [eksctl](https://github.com/weaveworks/eksctl)
-- [Flux Garbage Collection](https://fluxcd.io/legacy/flux/references/garbagecollection/)
-- [Kepler](https://github.com/sustainable-computing-io/kepler)
-- [Vagrant with KVM](https://dev.to/vumdao/create-an-ubuntu-20-04-server-using-vagrant-3d2i)
-- [KVM installation on Ubuntu](https://help.ubuntu.com/community/KVM/Installation)
-- [Minikube with KVM](https://minikube.sigs.k8s.io/docs/drivers/kvm2/)
-- [EC2 instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
-
-### Local Development
+## Local Development
 
 Steps to follow:
 - Install Virtualbox for your OS
@@ -53,7 +34,7 @@ Energy coefficients would have to determine how to deduce Marginal Carbon Emissi
 based on the cloud provider, their infrastructure, the region these are running in, and access to accurate and timely
 grid energy usage reporting. Cloud hyperscalers are not prepared to do that - some quote security issues.
 
-### Getting started with local development
+## Getting started with local development
 
 ```shell
 This is a script to run in a new  VM1 (Development) or Ubuntu machine (Production) to provision KVM.
@@ -81,3 +62,5 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 minikube start --driver=kvm2
 ```
+
+
