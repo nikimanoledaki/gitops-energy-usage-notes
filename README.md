@@ -3,10 +3,8 @@
 Case Study: Comparing the energy consumption of snowflake clusters and Flux-based GitOps clusters.
 
 ## Aims
-- Set up a reference architecture for how to measure energy consumption
+- Set up a reference architecture for how to measure energy consumption in cloud-native processes using cloud-native tools.
 - Answer the question: What is the environmental impact of GitOps?
-- Measure energy consumption of Kubernetes components and architectures using cloud-native tools
-- Create (eventually) a sort of reference architecture for how to measure cloud-native processes with cloud-native tools
 
 ## Resources
 

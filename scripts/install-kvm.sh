@@ -24,4 +24,4 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
 // Provision a test Kubernetes cluster using KVM
-minikube start --driver=kvm2
+minikube start --driver=kvm2 --profile=minikube --wait-timeout=15m0s --wait=all
