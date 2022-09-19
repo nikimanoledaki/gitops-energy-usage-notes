@@ -31,18 +31,18 @@ If using a Mac (x86 Intel CPU only, M1 is not supported), unfortunately, nested 
 Steps to follow:
 - Install Virtualbox for your OS
 - Install Vagrant
-- Configure a Vagrantfile (see example [Vagrantfile](./build/dev/Vagrantfile))
+- Spin up a Flintlock VM with the provided [Vagrantfile](Vagrantfile):
 
 ```
 vagrant up
 vagrant ssh
 ```
 
-The following step (minikube with KVM) will create a KVM nested in the Virtualbox VM, Virtualbox.
+### Start a Kubernetes cluster with minikube
 
-### Install KVM & start a Kubernetes cluster with minikube
-
-Use [this](./scripts/install-kvm.sh) script to install libvirt and use minikube to create a Kubernetes cluster using KVM.
+```
+./scripts/start-cluster.sh
+```
 
 #### Methodology
 
