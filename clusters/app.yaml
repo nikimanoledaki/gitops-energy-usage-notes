@@ -17,7 +17,7 @@
 #   namespace: default
 # spec:
 #   dependsOn:
-#   - name: kube-prometheus
+#   - name: kube-prometheus-stack
 #   - name: kepler
 #   interval: 24h
 #   path: ./date-setter-app
