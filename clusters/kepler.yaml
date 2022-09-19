@@ -1,27 +1,16 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: GitRepository
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
 metadata:
   name: kepler
   namespace: flux-system
 spec:
+  dependsOn:
+  - name: kube-prometheus-stack
   interval: 5m
-  ref:
-    branch: main
-  url: https://github.com/sustainable-computing-io/kepler
-# ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-# kind: Kustomization
-# metadata:
-#   name: kepler
-#   namespace: flux-system
-# spec:
-#   dependsOn:
-#   - name: kube-prometheus-stack
-#   interval: 5m
-#   path: ./manifests/kubernetes
-#   prune: true
-#   wait: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
+  path: ./clusters/kepler
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
