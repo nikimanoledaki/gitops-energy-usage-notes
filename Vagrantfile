@@ -16,7 +16,7 @@
 # limitations under the License.
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "generic/ubuntu2004"
+  config.vm.box = "generic/ubuntu2204"
 
   config.ssh.forward_agent = true
   config.vm.synced_folder "./", "/home/vagrant/flintlock"
@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 9090, host: 9090
 
   cpus = 2
-  memory = 4096
+  memory = 6144
   config.vm.provider :virtualbox do |v|
     # Enable nested virtualisation in VBox
     v.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
@@ -145,7 +145,7 @@ EOF
 
   config.vm.provision "start-cluster", type: "shell", run: "once" do |sh|
     sh.inline = <<~SHELL
-      curl -fsSL "https://raw.githubusercontent.com/nikimanoledaki/gitops-energy-usage/main/scripts/start-cluster" -o start-cluster.sh
+      curl -fsSL "https://raw.githubusercontent.com/nikimanoledaki/gitops-energy-usage/main/scripts/start-cluster.sh" -o start-cluster.sh
       chmod +x start-cluster.sh
     SHELL
   end

@@ -22,16 +22,20 @@ Some of the technologies, tools, and patterns mentioned in this project:
 ### OS
 
 #### Linux
-If using Linux, KVM can most likely be installed directly - I think? I have not verified this. Help would be appreciated!
-So, if using Linux, no need to create VM1 - skip directly to step to [install KVM](#install-kvm--start-a-kubernetes-cluster-with-minikube).
+If using Linux, a cluster can be created directly - have not verified this yet, help would be appreciated!
+
+Skip to the step to [start a Kubernetes cluster with minikube](#start-a-kubernetes-cluster-with-minikube).
 
 #### MacOS
-If using a Mac (x86 Intel CPU only, M1 is not supported), unfortunately, nested VMs are a must.
+If using a Mac, here is how to use nested VMs.
 
-Steps to follow:
-- Install Virtualbox for your OS
-- Install Vagrant
-- Spin up a Flintlock VM with the provided [Vagrantfile](Vagrantfile):
+Note: this is for Intel x86 only. M1 is not supported.
+
+Dependencies:
+- Virtualbox - `brew install --cask virtualbox`
+- Vagrant - `brew install --cask vagrant`
+
+Spin up a Flintlock VM with the provided [Vagrantfile](Vagrantfile):
 
 ```
 vagrant up
@@ -43,26 +47,6 @@ vagrant ssh
 ```
 ./scripts/start-cluster.sh
 ```
-
-#### Methodology
-
-In a cloud environment, VM1 represents the host machine or baremetal infrastrcture.
-This could, in theory, be an EC2 instance in AWS (which is itself a VM). Testing on a regular EC2 instance has not been successful yet.
-
-Alternatively, it could be done using Liquid Metal on a Flintlock microVM hosted on a Equinix baremetal machine.
-
-Self-hosting in a co-located Data Centre (DC) such as Equinix adds the the benefit from data center economies of scale that
-may lead to optimisations on Scope 1 direct emissions.
-
-The aim of this is to be able to do a Lifecycle Assessment of a piece of software architecture in a cloud environment to
-determine its energy usage in various scenarios and use cases. 
-
-Estimations for carbon emissions could follow this. However, the focus here is on energy usage rather than localized grid system estimates.
-
-Metrics on energy usage could be combined with carbon emissions estimates.
-Energy coefficients would deduce Marginal Carbon Emissions from these CPU-based, Pod-based, energy metrics.
-The energy coefficients would be based on the cloud provider, their infrastructure, the region these are running in, etc. 
-This would require access to accurate and timely grid energy usage reporting. Cloud providers are not yet prepared to do this however due to security-related concerns.
 
 ### Install Kepler
 
@@ -108,3 +92,22 @@ make prometheus
 make grafana
 ```
 
+### Methodology
+
+In a cloud environment, VM1 represents the host machine or baremetal infrastrcture.
+This could, in theory, be an EC2 instance in AWS (which is itself a VM). Testing on a regular EC2 instance has not been successful yet.
+
+Alternatively, it could be done using Liquid Metal on a Flintlock microVM hosted on a Equinix baremetal machine.
+
+Self-hosting in a co-located Data Centre (DC) such as Equinix adds the the benefit from data center economies of scale that
+may lead to optimisations on Scope 1 direct emissions.
+
+The aim of this is to be able to do a Lifecycle Assessment of a piece of software architecture in a cloud environment to
+determine its energy usage in various scenarios and use cases. 
+
+Estimations for carbon emissions could follow this. However, the focus here is on energy usage rather than localized grid system estimates.
+
+Metrics on energy usage could be combined with carbon emissions estimates.
+Energy coefficients would deduce Marginal Carbon Emissions from these CPU-based, Pod-based, energy metrics.
+The energy coefficients would be based on the cloud provider, their infrastructure, the region these are running in, etc. 
+This would require access to accurate and timely grid energy usage reporting. Cloud providers are not yet prepared to do this however due to security-related concerns.
