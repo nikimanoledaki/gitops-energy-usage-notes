@@ -1,35 +1,31 @@
 ## Energy-efficient Kubernetes on baremetal
 
-Case Study: Comparing the energy consumption of snowflake clusters and Flux-based GitOps clusters.
+This project aims to measure and compare the energy consumption of snowflake clusters versus that of Flux-based GitOps clusters.
 
-## Aims
-- Set up a reference architecture for how to measure energy consumption in cloud-native processes using cloud-native tools.
-- Answer the question: What is the environmental impact of GitOps?
+Another aim is to create a reference architecture for measuring the energy consumption of cloud-native processes using cloud-native tools.
+
+While the focus here is on energy usage rather than localized grid system estimates, metrics on energy usage could be used to deduce and estimate carbon emissions.
+
+This could lead to a model fo rLife Cycle Assessment (LCAs) of cloud-native software where the energy consumption of various use cases could be measured.
 
 ## Resources
 
-Some of the technologies, tools, and patterns mentioned in this project:
-- [eksctl](https://github.com/weaveworks/eksctl)
-- [Flux Garbage Collection](https://fluxcd.io/legacy/flux/references/garbagecollection/)
+Some of the main tools in this stack:
+- [Flux](https://fluxcd.io/)
 - [Kepler](https://github.com/sustainable-computing-io/kepler)
-- [Vagrant with KVM](https://dev.to/vumdao/create-an-ubuntu-20-04-server-using-vagrant-3d2i)
-- [KVM installation on Ubuntu](https://help.ubuntu.com/community/KVM/Installation)
-- [Minikube with KVM](https://minikube.sigs.k8s.io/docs/drivers/kvm2/)
-- [EC2 instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
+- [Flintlock for microVMs](https://github.com/weaveworks-liquidmetal/flintlock)
+- [Liquid Metal](https://github.com/weaveworks-liquidmetal)
+- [CAPMVM](https://github.com/weaveworks-liquidmetal/cluster-api-provider-microvm)
 
 ## Getting Started with Local Development
 
 ### OS
 
 #### Linux
-If using Linux, a cluster can be created directly - have not verified this yet, help would be appreciated!
-
-Skip to the step to [start a Kubernetes cluster with minikube](#start-a-kubernetes-cluster-with-minikube).
+For Linux users, create a cluster directly [with minikube](#start-a-kubernetes-cluster-with-minikube).
 
 #### MacOS
-If using a Mac, here is how to use nested VMs.
-
-Note: this is for Intel x86 only. M1 is not supported.
+For MacOS user, this will only work with Intel x86. M1 is not supported.
 
 Dependencies:
 - Virtualbox - `brew install --cask virtualbox`
@@ -42,72 +38,19 @@ vagrant up
 vagrant ssh
 ```
 
+Note that the Firecracker VM requires about 8GB for a cluster of about 6GB.
+
 ### Start a Kubernetes cluster with minikube
 
-```
-./scripts/start-cluster.sh
-```
+```bash
+# Create a minikube cluster
 
-### Install Kepler
-
-What is [Kepler](https://github.com/sustainable-computing-io/kepler)?
-> Kepler (Kubernetes-based Efficient Power Level Exporter) uses eBPF to probe energy related system stats and exports as Prometheus metrics
-
-It can help us get energy consumption metrics from a cluster.
-
-Kepler requirements as outlined [here](https://github.com/sustainable-computing-io/kepler/tree/main/manifests#prerequisites):
-- Support for cgroup v2
-- Support for kernel-devel extensions
-- Provide the kernel headers (required by eBPF)
-- Kernel with eBPF support
-
-For example, [Kepler on Openshift](https://github.com/sustainable-computing-io/kepler/tree/main/manifests#kepler-on-openshift) has already been integrated and works. This integration can be used as an example of what configuration is needed, e.g.:
-```
-  kernelArguments:
-    - systemd.unified_cgroup_hierarchy=1
-    - cgroup_no_v1="all"
-  extensions:
-  - kernel-devel
+# Create a config repo
 ```
 
-### Install Prometheus & Grafana on the cluster
+## Getting Started in a Cloud Environment
 
-Install Prometheus & Grafana using the [Makefile](Makefile):
-```
-// All of these should be made GitOps-able with Flux and Helm and/or Terraform.
-// They should then be added to the repo in ./clusters for Flux to pick them up.
+Use [Liquid Metal](https://github.com/weaveworks-liquidmetal) to create microVMs on an Equinix baremetal machine.
 
-// Install all dependencies
-make-dependencies
-
-OR
-
-// Install Kepler as a Daemonset
-make kepler
-
-// Start Prometheus to receive data from Kepler and send it to Grafana
-make prometheus
-
-// Visualise energy CPU metrics
-make grafana
-```
-
-### Methodology
-
-In a cloud environment, VM1 represents the host machine or baremetal infrastrcture.
-This could, in theory, be an EC2 instance in AWS (which is itself a VM). Testing on a regular EC2 instance has not been successful yet.
-
-Alternatively, it could be done using Liquid Metal on a Flintlock microVM hosted on a Equinix baremetal machine.
-
-Self-hosting in a co-located Data Centre (DC) such as Equinix adds the the benefit from data center economies of scale that
-may lead to optimisations on Scope 1 direct emissions.
-
-The aim of this is to be able to do a Lifecycle Assessment of a piece of software architecture in a cloud environment to
-determine its energy usage in various scenarios and use cases. 
-
-Estimations for carbon emissions could follow this. However, the focus here is on energy usage rather than localized grid system estimates.
-
-Metrics on energy usage could be combined with carbon emissions estimates.
-Energy coefficients would deduce Marginal Carbon Emissions from these CPU-based, Pod-based, energy metrics.
-The energy coefficients would be based on the cloud provider, their infrastructure, the region these are running in, etc. 
-This would require access to accurate and timely grid energy usage reporting. Cloud providers are not yet prepared to do this however due to security-related concerns.
+- [Set up Liquid Metal](https://github.com/weaveworks-liquidmetal/getting-started/blob/main/docs/intro.md#terraform-an-environment-on-equinix) with [this Terraform manifest](TODO)
+- Set up a Kubernetes cluster using [CAPMVM](https://github.com/weaveworks-liquidmetal/getting-started/blob/main/docs/create.md)
