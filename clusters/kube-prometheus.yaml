@@ -2,25 +2,42 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: GitRepository
 metadata:
-  name: flux-monitoring
+  name: kube-prometheus
   namespace: flux-system
 spec:
   interval: 30m0s
   ref:
     branch: main
-  url: https://github.com/fluxcd/flux2
+  url: https://github.com/prometheus-operator/kube-prometheus
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: kube-prometheus-stack
+  name: kube-prometheus-setup
   namespace: flux-system
 spec:
   interval: 1h0m0s
-  path: ./manifests/monitoring/kube-prometheus-stack
+  path: ./manifests/setup
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-monitoring
+    name: kube-prometheus
+  timeout: 5m0s
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: kube-prometheus
+  namespace: flux-system
+spec:
+  interval: 1h0m0s
+  path: ./manifests
+  dependsOn:
+  - name: kube-prometheus-setup
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: kube-prometheus
   timeout: 5m0s
   wait: true

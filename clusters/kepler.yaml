@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: kube-prometheus-stack
+  - name: kube-prometheus
   interval: 5m
   path: ./clusters/kepler
   prune: true

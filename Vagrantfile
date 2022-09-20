@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 9090, host: 9090
 
   cpus = 2
-  memory = 6144
+  memory = 8192
   config.vm.provider :virtualbox do |v|
     # Enable nested virtualisation in VBox
     v.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
@@ -122,6 +122,14 @@ EOF
       curl -fsSL "https://github.com/weaveworks/reignite/files/7278467/firecracker_macvtap.zip" -o /tmp/firecracker-macvtap.zip
       unzip -u /tmp/firecracker-macvtap.zip -d /usr/local/bin
     SHELL
+  end
+
+  config.vm.provision "configure-kernel-headers", type: "shell", run: "once" do |sh|
+    sh.inline = <<~SHELL
+      apt search linux-headers-$(uname -r)
+      sudo apt update && sudo apt install linux-headers-$(uname -r)
+      ls -l /usr/src/linux-headers-$(uname -r)
+  SHELL
   end
 
   config.vm.provision "install-minikube", type: "shell", run: "once" do |sh|
