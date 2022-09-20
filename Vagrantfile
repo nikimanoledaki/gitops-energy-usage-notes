@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.network "forwarded_port", guest: 9090, host: 9090
 
-  cpus = 2
+  cpus = 3
   memory = 8192
   config.vm.provider :virtualbox do |v|
     # Enable nested virtualisation in VBox
