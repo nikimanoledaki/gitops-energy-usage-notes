@@ -1,0 +1,27 @@
+# runnerdeployment.yaml
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: self-destruct
+spec:
+  replicas: 5
+  template:
+    spec:
+      repository: nikimanoledaki/gitops-energy-usage
+      labels:
+      - liquid-metal
+      - self-destruct
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: manual-destruct
+spec:
+  replicas: 5
+  template:
+    spec:
+      ephemeral: false
+      repository: nikimanoledaki/gitops-energy-usage
+      labels:
+      - liquid-metal
+      - manual-destruct
