@@ -5,7 +5,7 @@ on: [pull_request, workflow_dispatch]
 jobs:
   test:
     name: test
-    runs-on: self-hosted
+    runs-on: [self-hosted, liquid-metal, selft-destruct]
     steps:
       - name: Test
         run: echo WOOHOO
