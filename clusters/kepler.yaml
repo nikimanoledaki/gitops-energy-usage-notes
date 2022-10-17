@@ -18,11 +18,7 @@ metadata:
 spec:
   dependsOn:
   - name: kube-prometheus-setup
-  - name: kube-prometheus
   interval: 5m
-  path: ./manifests/kubernetes/
+  path: ./kepler
   prune: true
   wait: true
-  sourceRef:
-    kind: GitRepository
-    name: kepler
