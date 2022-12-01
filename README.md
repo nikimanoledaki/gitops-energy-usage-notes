@@ -8,6 +8,12 @@ The focus here is on energy usage rather than, for example, [marginal emissions 
 
 This project could be used as the base model for conducting Life Cycle Assessment (LCAs) of any cloud-native software that runs on a Pod.
 
+---
+
+## [Update] The final version of this project can be found here: https://github.com/nikimanoledaki/sustainability-journey-with-gitops
+
+---
+
 ## Resources
 
 - [Flux](https://fluxcd.io/)
