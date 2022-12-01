@@ -10,7 +10,7 @@ This project could be used as the base model for conducting Life Cycle Assessmen
 
 ---
 
-## [Update] The final version of this project can be found here: https://github.com/nikimanoledaki/sustainability-journey-with-gitops
+## [Update] The latest version of this project can be found here: https://github.com/nikimanoledaki/sustainability-journey-with-gitops
 
 ---
 
